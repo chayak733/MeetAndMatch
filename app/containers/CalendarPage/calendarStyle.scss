@@ -1,0 +1,110 @@
+a{
+  color: #776a5f;
+}
+
+.fc-col-header-cell-cushion{
+  color: #7c2f49;
+}
+
+.fc-theme-standard{
+    width: 75%;
+    height: 60vh;
+  }
+  
+  .fc-toolbar{
+    margin-bottom: 3px;
+  }
+  
+  .fc-button-group{
+    background-color: #7c2f49;
+  }
+
+  .fc-view-harness{
+    width: 100%;
+    height: 15%;
+  }
+
+  .fc-scrollgrid-section-liquid{
+    height: 5%;
+  }
+
+
+  .fc-day-today{
+    background-color: #a096887a;
+  }
+
+  .fc-event-title-container{
+    background-color: #7c2f49;
+    border: none;
+    color: #ffffff;
+    font-weight: normal;
+  }
+
+  .fc-event-title-container{
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+  }
+
+  .fc-event-title-container:after {
+    // content: attr(title);
+    content: "It worked!!!";
+    position: absolute;
+    bottom: 130%;
+    left: 20%;
+    background: #726658;
+    padding: 5px 15px;
+    color: ffffff;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    border-radius: 10px;
+    white-space: nowrap;
+    opacity: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+  }
+
+  .fc-event-title-container:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-top: 20px solid #726658;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    opacity: 0;
+    left: 30%;
+    bottom: 90%;
+  }
+  .fc-event-title-container:hover:after {
+    bottom: 100%;
+  }
+  .fc-event-title-container:hover:before {
+    bottom: 70%;
+  }
+  .fc-event-title-container:hover:after,
+  .fc-event-title-container:hover:before {
+    opacity: 1;
+  }
+
+  .fc-popover-header{
+    background-color: #776a5f;
+  }
+
+  .fc-popover-body{
+    background-color: #c2b29a;
+  }
+
+  .fc-sticky{
+    border: 1px solid #7c2f49;
+  }

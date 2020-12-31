@@ -1,0 +1,84 @@
+form{
+  justify-content: center;
+  flex-direction: row;
+}
+
+.form-row{
+  justify-content: center;
+  flex-direction: row;
+}
+
+.form-control:focus{
+  box-shadow: none;
+  border: none;
+}
+
+.mb-2{
+margin-bottom: 0rem !important;
+}
+
+.my-2{
+margin-bottom: 0rem !important;
+}
+
+#inlineFormInput{
+margin-bottom: 0px;
+}
+
+.btn-primary{
+  display: inline-flex;
+  padding: 0.4vw 1.5vw;
+  margin: 1vw;
+  text-decoration: none;
+  border-radius: 4px;
+  -webkit-font-smoothing: antialiased;
+  -webkit-touch-callout: none;
+  user-select: none;
+  cursor: pointer;
+  outline: 0;
+  font-family: 'stencil';
+  font-weight: bold;
+  font-size: 16px;
+  border: 2px solid #42392c;
+  color: #fff;
+  background-color: #5c52447a;
+
+  &:hover {
+    background-color: #5c5244;
+    border: 2px solid #42392c;
+    color: #fff;
+  }
+
+  &:active {
+    background-color: #5c5244;
+    color: #fff;
+  }
+  &::after {
+    background-color: #5c5244 !important;
+    color: #fff !important;
+  }
+}
+
+.alert-light{
+color: #42392c;
+background-color: #5c524436;
+border: 3px solid #42392c;
+width: 45vw;
+}
+
+.alertLink{
+color: #ffffff !important;
+}
+
+#dropdown-custom-components{
+  background-color: #5c5244;
+  border: 2px solid #42392c;
+  color: #fff;
+  box-shadow: none;
+
+  &:hover {
+    background-color: #7c2f49;
+    border-color: #ffffff;
+    box-shadow: #5c52447a;
+  }
+}
