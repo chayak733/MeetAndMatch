@@ -13,9 +13,41 @@ form{
   margin-bottom: .5rem;
 }
 
+.form-control{
+  margin: 0vw;
+  background-color: #ddd0bd;
+  &::placeholder {
+    // background-color: #ddd0bd !important;
+    color: #42392c !important;
+  }
+}
+
 .form-control:focus{
   box-shadow: none;
-  border: none;
+  // border: none;
+  background-color: #5c52447a;
+  color: #fff;
+}
+
+.input-group-text{
+  // background-color: #5c52449a;
+  // color: #42392c;
+  background-color: #5c5244;
+  color: #fff;
+}
+
+// #dobInputPrepend{
+//   padding: 2vw;
+//   margin: 0vw;
+// }
+
+#dobInputText{
+  // padding: 30%;
+}
+
+.input-group{
+  border: 1px solid #42392c;
+  border-radius: 5px;
 }
 
 .mb-2{
@@ -76,7 +108,28 @@ color: #ffffff !important;
 }
 
 .radio{
- margin-left: 1vw;
+  margin-left: 1vw;
+  margin-top: 0vh;
+//  margin-right: 0vw !important;
+  width: min-content;
+}
+
+#input-file{
+  //margin-left: 22vw;
+  width: min-content;
+  border: 1px solid #42392c;
+  ::placeholder{
+    background-color: #ddd0bd;
+  }
+}
+
+#file-upload-button{
+  background-color: #5c5244 !important;
+  color: #fff !important;
+}
+
+.kpkskh{
+  margin-top: 0.75vh !important;
 }
 
 #dateInputCol{
@@ -85,9 +138,9 @@ color: #ffffff !important;
 
 #costummedDropdown{
   width: 220px;
-  color: black;
+  // color: black;
   font-weight: lighter;
-  background-color: #ffffff;
+  // background-color: #ffffff;
   margin:0px;
   border: none;
   :focus{

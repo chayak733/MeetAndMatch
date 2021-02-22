@@ -22,15 +22,19 @@ import CalendarPage from 'containers/CalendarPage';
 import UpdateMeeting from 'containers/UpdateMeeting';
 import UpdateParticipant from 'containers/UpdateParticipant';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
-import ParticipantDashboard from '../ParticipantDashboard';
+import ParticipantDashboard from 'containers/ParticipantDashboard';
+import AdminDashboard from 'C:/yafit/git_MeetAndMatch/MeetAndMatch/app/containers/AdminDashboard';
+import Login from 'containers/Login';
+import SignIn from '../SignIn';
 import saga from './saga';
-import { loadMeetings, loadParticipants } from './actions';
+import { loadMeetings, loadParticipants, getMeetingsByMM } from './actions';
 import {
   makeSelectMeetingCard,
   makeSelectMeetingEvent,
   makeSelectMeetings,
   makeSelectParticipantCard,
   makeSelectParticipants,
+  makeSelectUser,
   makeSelectLoading,
   makeSelectError,
 } from './selectors';
@@ -42,12 +46,17 @@ import 'style.scss';
 export function App(props) {
   // useInjectReducer({ key: 'app', reducer });
   useInjectSaga({ key: 'app', saga });
+
   useEffect(() => {
-    if (!props.meetings) props.onLoadMeetings();
+    if (props.user && !props.meetings) props.onLoadMeetings(props.user.id);
   }, []);
 
   useEffect(() => {
     if (!props.participants) props.onLoadParticipants();
+  }, []);
+
+  useEffect(() => {
+    if (!props.meetings) props.onLoadMeetings(1);
   }, []);
 
   return (
@@ -87,6 +96,9 @@ export function App(props) {
             )}
           />
           <Route component={NotFoundPage} />
+          <Route path="/login" component={() => <Login />} />
+          <Route path="/signin" component={() => <SignIn />} />
+          <Route path="/adminDashboard" component={() => <AdminDashboard />} />
         </Switch>
         <Footer />
       </center>
@@ -100,6 +112,7 @@ App.propTypes = {
   meetingEvents: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   participants: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   participantCards: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  user: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   isLoading: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   onLoadMeetings: PropTypes.func,
@@ -112,13 +125,14 @@ const mapStateToProps = createStructuredSelector({
   meetings: makeSelectMeetings(),
   participantCards: makeSelectParticipantCard(),
   participants: makeSelectParticipants(),
+  user: makeSelectUser(),
   isLoading: makeSelectLoading(),
   error: makeSelectError(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    onLoadMeetings: () => dispatch(loadMeetings()),
+    onLoadMeetings: (mmId) => dispatch(getMeetingsByMM(mmId)),
     onLoadParticipants: () => dispatch(loadParticipants()),
     dispatch,
   };

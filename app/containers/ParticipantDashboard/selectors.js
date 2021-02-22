@@ -18,7 +18,7 @@ const selectParticipantDashboardDomain = state => state.global || initialState;
 const makeSelectParticipants = () =>
   createSelector(
     selectParticipantDashboardDomain,
-    substate => substate.participants,
+    substate => substate.participant,
   );
 
 export default makeSelectParticipants;

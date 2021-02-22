@@ -5,10 +5,18 @@
  */
 
 import {
-  // GET MEETINGS LIST
+  // GET ALL MEETINGS
   LOAD_MEETINGS,
   LOAD_MEETINGS_SUCCESS,
   LOAD_MEETINGS_ERROR,
+  // GET MEETINGS BY MM ID
+  GET_MM_MEETINGS,
+  GET_MM_MEETINGS_SUCCESS,
+  GET_MM_MEETINGS_ERROR,
+  // GET MEETING
+  GET_MEETING,
+  GET_MEETING_SUCCESS,
+  GET_MEETING_ERROR,
   // ADD MEEETING
   ADD_MEETING,
   ADD_MEETING_SUCCESS,
@@ -37,9 +45,35 @@ import {
   DEL_PARTICIPANT,
   DEL_PARTICIPANT_SUCCESS,
   DEL_PARTICIPANT_ERROR,
+  // GET STATISTICS
+  GET_STATISTICS,
+  GET_STATISTICS_SUCCESS,
+  GET_STATISTICS_ERROR,
+  // LOGIN USER
+  LOGIN_USER,
+  LOGIN_USER_SUCCESS,
+  LOGIN_USER_ERROR,
+  // GET_UNAPRROVED_MATCHMAKERS
+  GET_UNAPRROVED_MATCHMAKERS,
+  GET_UNAPRROVED_MATCHMAKERS_SUCCESS,
+  GET_UNAPRROVED_MATCHMAKERS_ERROR,
+  // ADD MATCHMAKER
+  ADD_MATCHMAKER,
+  ADD_MATCHMAKER_SUCCESS,
+  ADD_MATCHMAKER_ERROR,
+  // APPROVE MATCHMAKER
+  APPROVE_MATCHMAKER,
+  APPROVE_MATCHMAKER_SUCCESS,
+  APPROVE_MATCHMAKER_ERROR,
+  // DEL MATCHMAKER
+  DEL_MATCHMAKER,
+  DEL_MATCHMAKER_SUCCESS,
+  DEL_MATCHMAKER_ERROR,
+  // SIGNOUT
+  SIGNOUT,
 } from './constants';
 
-// GET MEETINGS LIST
+// GET ALL MEETINGS
 export function loadMeetings() {
   return {
     type: LOAD_MEETINGS,
@@ -60,6 +94,50 @@ export function meetingsLoadingError(error) {
   };
 }
 
+// GET MEETINGS BY MM
+export function getMeetingsByMM(mmId) {
+  return {
+    type: GET_MM_MEETINGS,
+    payload: mmId,
+  };
+}
+
+export function getMeetingsByMMSuccess(meetings) {
+  return {
+    type: GET_MM_MEETINGS_SUCCESS,
+    meetings,
+  };
+}
+
+export function getMeetingsByMMError(error) {
+  return {
+    type: GET_MM_MEETINGS_ERROR,
+    error,
+  };
+}
+
+// GET MEETING BY ID
+export function getMeeting(meetingId) {
+  return {
+    type: GET_MEETING,
+    payload: meetingId,
+  };
+}
+
+export function getMeetingSuccess(meeting) {
+  return {
+    type: GET_MEETING_SUCCESS,
+    meeting,
+  };
+}
+
+export function getMeetingError(error) {
+  return {
+    type: GET_MEETING_ERROR,
+    error,
+  };
+}
+
 // ADD MEEETING
 export function addMeeting(meeting) {
   return {
@@ -68,13 +146,10 @@ export function addMeeting(meeting) {
   };
 }
 
-export function addMeetingSuccess(meeting, meetings) {
+export function addMeetingSuccess(meeting) {
   return {
     type: ADD_MEETING_SUCCESS,
-    payload: {
-      meeting,
-      meetings,
-    },
+    meeting,
   };
 }
 
@@ -86,17 +161,18 @@ export function addMeetingError(error) {
 }
 
 // DELETE MEETING
-export function delMeeting(meeting) {
+export function delMeeting(meeting, mmId) {
   return {
     type: DEL_MEETING,
     meeting,
+    mmId,
   };
 }
 
-export function delMeetingSuccess(meetings) {
+export function delMeetingSuccess(mId) {
   return {
     type: DEL_MEETING_SUCCESS,
-    meetings,
+    mId,
   };
 }
 
@@ -158,13 +234,10 @@ export function addParticipant(participant) {
   };
 }
 
-export function addParticipantSuccess(participant, participants) {
+export function addParticipantSuccess(participant) {
   return {
     type: ADD_PARTICIPANT_SUCCESS,
-    payload: {
-      participant,
-      participants,
-    },
+    participant,
   };
 }
 
@@ -205,10 +278,10 @@ export function delParticipant(participant) {
   };
 }
 
-export function delParticipantSuccess(participants) {
+export function delParticipantSuccess(pId) {
   return {
     type: DEL_PARTICIPANT_SUCCESS,
-    participants,
+    pId,
   };
 }
 
@@ -217,4 +290,141 @@ export function delParticipantError(error) {
     type: DEL_PARTICIPANT_ERROR,
     error,
   };
+}
+
+// GET STATISTICS
+export function getStatistics() {
+  return {
+    type: GET_STATISTICS,
+  };
+}
+
+export function getStatisticsSuccess(participants) {
+  return {
+    type: GET_STATISTICS_SUCCESS,
+    participants,
+  };
+}
+
+export function getStatisticsError(err) {
+  return {
+    type: GET_STATISTICS_ERROR,
+    err,
+  };
+}
+
+// MATCHMAKERS
+// LOGIN
+export function loginUser(user) {
+  return {
+    type: LOGIN_USER,
+    user,
+  };
+}
+
+export function loginUserSuccess(user) {
+  return {
+    type: LOGIN_USER_SUCCESS,
+    user,
+  };
+}
+
+export function loginUserError(error) {
+  return {
+    type: LOGIN_USER_ERROR,
+    error,
+  };
+}
+
+// GET UNAPRROVED MATCHMAKERS
+export function getUnapprovedMM() {
+  return {
+    type: GET_UNAPRROVED_MATCHMAKERS,
+  };
+}
+
+export function getUnapprovedMMSuccess(matchmakers) {
+  return {
+    type: GET_UNAPRROVED_MATCHMAKERS_SUCCESS,
+    matchmakers,
+  };
+}
+
+export function getUnapprovedMMError(err) {
+  return {
+    type: GET_UNAPRROVED_MATCHMAKERS_ERROR,
+    err,
+  };
+}
+
+// ADD MATCHMAKER
+export function addMatchmaker(matchmaker) {
+  return {
+    type: ADD_MATCHMAKER,
+    matchmaker,
+  };
+}
+
+export function addMatchmakerSuccess(matchmaker) {
+  return {
+    type: ADD_MATCHMAKER_SUCCESS,
+    matchmaker,
+  };
+}
+
+export function addMatchmakerError(error) {
+  return {
+    type: ADD_MATCHMAKER_ERROR,
+    error,
+  };
+}
+
+// APPROVE MATCHMAKER
+export function approveMatchmaker(matchmaker) {
+  return {
+    type: APPROVE_MATCHMAKER,
+    mm: matchmaker,
+  };
+}
+
+export function approveMatchmakerSuccess(mmId) {
+  return {
+    type: APPROVE_MATCHMAKER_SUCCESS,
+    mmId,
+  };
+}
+
+export function approveMatchmakerError(error) {
+  return {
+    type: APPROVE_MATCHMAKER_ERROR,
+    error,
+  };
+}
+
+// DELETE MATCHMAKER
+export function delMatchmaker(matchmaker) {
+  return {
+    type: DEL_MATCHMAKER,
+    mm: matchmaker,
+  };
+}
+
+export function delMatchmakerSuccess(mmId) {
+  return {
+    type: DEL_MATCHMAKER_SUCCESS,
+    mmId,
+  };
+}
+
+export function delMatchmakerError(error) {
+  return {
+    type: DEL_MATCHMAKER_ERROR,
+    error,
+  };
+}
+
+export function signOut() {
+  return {
+    type: SIGNOUT,
+  }
 }

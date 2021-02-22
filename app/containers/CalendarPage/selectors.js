@@ -4,17 +4,16 @@ import { initialState } from './reducer';
 /**
  * Direct selector to the calendarPage state domain
  */
-const selectCalendarPageDomain = state => state.global || initialState;
+const selectGlobal = state => state.global || initialState;
 
 /**
  * Default selector used by CalendarPage
  */
 
-const makeDefaultSelect = () =>
+const makeSelectUser = () =>
   createSelector(
-    selectCalendarPageDomain,
-    substate => substate,
+    selectGlobal,
+    substate => substate.user,
   );
 
-export default makeDefaultSelect;
-export { selectCalendarPageDomain };
+export { makeSelectUser };

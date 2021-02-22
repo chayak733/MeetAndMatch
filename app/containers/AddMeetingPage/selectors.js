@@ -29,4 +29,11 @@ const selectFemaleParticipants = () =>
       ),
   );
 
-export { selectMaleParticipants, selectFemaleParticipants };
+const makeSelectUser = () =>
+  createSelector(
+    selectGlobal,
+    substate => substate.user,
+  );
+
+
+export { selectMaleParticipants, selectFemaleParticipants, makeSelectUser };

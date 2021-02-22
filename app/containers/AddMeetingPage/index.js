@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useState, createRef } from 'react';
+import React, { useEffect, useState, createRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -27,7 +27,7 @@ import Button from '../../components/Button';
 import {
   selectFemaleParticipants,
   selectMaleParticipants,
-  makeSelectParticipantByID,
+  makeSelectUser,
 } from './selectors';
 import { addMeeting, getParticipant } from '../App/actions';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -37,13 +37,19 @@ import {
   makeSelectCurrentParticipant,
   makeSelectCurrentMeeting,
 } from '../App/selectors';
+import { Login } from '../Login';
 
 export function AddMeetingPage(props) {
   const [showAlert, setShowAlert] = useState(false);
-  const [maleTitle, setMaleTitle] = useState('Male Participant');
-  const [femaleTitle, setFemaleTitle] = useState('Female Participant');
-  const current = makeSelectCurrentParticipant();
-  // useInjectReducer({ key: 'addMeetingPage', reducer });
+  const [maleTitle, setMaleTitle] = useState(['Male Participant', '']);
+  const [femaleTitle, setFemaleTitle] = useState(['Female Participant', '']);
+  const [user, setUser] = useState(false)
+
+  useEffect(() => {
+    if (props.user) setUser(props.user.name);
+  }, []);
+  //const current = makeSelectCurrentParticipant();
+  //useInjectReducer({ key: 'addMeetingPage', reducer });
 
   const DateRef = createRef();
   const AddressRef = createRef();
@@ -54,23 +60,25 @@ export function AddMeetingPage(props) {
     event.preventDefault();
     const newMeeting = {
       id: uuid(),
-      firstParticipant: maleTitle,
-      secondParticipant: femaleTitle,
+      matchMakerId: props.user,
+      firstParticipantId: maleTitle[1],
+      secondParticipantId: femaleTitle[1],
       address: AddressRef.current.value,
       date: DateRef.current.value,
     };
+    // console.log(newMeeting);
     props.addMeeting(newMeeting);
   };
 
   const handleSelect = participant => {
-    if (participant.gender === 'male')
-      setMaleTitle(`${participant.firstName} ${participant.lastName}`);
-    else if (participant.gender === 'female')
-      setFemaleTitle(`${participant.firstName} ${participant.lastName}`);
+    if (participant.gender === 'male' || participant.gender === 'Male')
+      setMaleTitle([`${participant.firstName} ${participant.lastName}`, participant.id]);
+    else if (participant.gender === 'female' || participant.gender === 'Female')
+      setFemaleTitle([`${participant.firstName} ${participant.lastName}`, participant.id]);
   };
 
   const checkFunc = () => {
-    getParticipant('5fbee74a4631c661f2c28397');
+    props.getParticipant('5fbee74a4631c661f2c28397');
     console.log(current);
   };
 
@@ -92,103 +100,109 @@ export function AddMeetingPage(props) {
   };
 
   return (
-    <div>
-      {showAlert && (
-        <Alert variant="light">
-          <Alert.Heading>THE MEETING WAS ADDED SUCCESSFULY!</Alert.Heading>
-          <Link to="/MeetingsDashboard" id="alertLink">
-            Move to Meetings Dashboard
+    <center>
+      {!props.user &&
+        <div>
+          {showAlert && (
+            <Alert variant="light">
+              <Alert.Heading>THE MEETING WAS ADDED SUCCESSFULY!</Alert.Heading>
+              <Link to="/MeetingsDashboard" id="alertLink">
+                Move to Meetings Dashboard
           </Link>
-        </Alert>
-      )}
+            </Alert>
+          )}
 
-      <button type="submit" onClick={checkFunc}>
-        get participant
-      </button>
+          <button type="submit" onClick={checkFunc}>
+            get participant
+        </button>
 
-      <Form onSubmit={mapFormToDispatch}>
-        <center>
-          <h3> Choose First Participant:</h3>
-          <Form.Row className="align-items-center">
-            <Col>
-              <Dropdown>
-                <Dropdown.Toggle
-                  as={CustomToggle}
-                  id="dropdown-custom-components"
-                >
-                  {maleTitle}
-                </Dropdown.Toggle>
+          <Form onSubmit={mapFormToDispatch}>
+            <center>
+              <h3> Choose First Participant:</h3>
+              <Form.Row className="align-items-center">
+                <Col>
+                  <Dropdown>
+                    <Dropdown.Toggle
+                      as={CustomToggle}
+                      id="dropdown-custom-components"
+                    >
+                      {maleTitle}
+                    </Dropdown.Toggle>
 
-                <Dropdown.Menu as={CustomMenu}>
-                  {getDropdownItems('male')}
-                </Dropdown.Menu>
-              </Dropdown>
-            </Col>
-          </Form.Row>
+                    <Dropdown.Menu as={CustomMenu}>
+                      {getDropdownItems('male')}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Col>
+              </Form.Row>
 
-          <h3>Choose Second Participant:</h3>
-          <Form.Row className="align-items-center">
-            <Col>
-              <Dropdown>
-                <Dropdown.Toggle
-                  as={CustomToggle}
-                  id="dropdown-custom-components"
-                >
-                  {femaleTitle}
-                </Dropdown.Toggle>
+              <h3>Choose Second Participant:</h3>
+              <Form.Row className="align-items-center">
+                <Col>
+                  <Dropdown>
+                    <Dropdown.Toggle
+                      as={CustomToggle}
+                      id="dropdown-custom-components"
+                    >
+                      {femaleTitle}
+                    </Dropdown.Toggle>
 
-                <Dropdown.Menu as={CustomMenu}>
-                  {getDropdownItems('female')}
-                </Dropdown.Menu>
-              </Dropdown>
-            </Col>
-          </Form.Row>
+                    <Dropdown.Menu as={CustomMenu}>
+                      {getDropdownItems('female')}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Col>
+              </Form.Row>
 
-          <h3>Meeting Details:</h3>
-          <Form.Row className="align-items-center">
-            <Col xs="auto">
-              <InputGroup className="mb-2">
-                <InputGroup.Prepend>
-                  <InputGroup.Text>
-                    <GeoAlt />
-                  </InputGroup.Text>
-                </InputGroup.Prepend>
-                <Form.Control
-                  className="mb-2"
-                  id="inlineFormInput"
-                  placeholder="Insert address"
-                  ref={AddressRef}
-                  required
-                />
-              </InputGroup>
-            </Col>
-            <Col xs="auto">
-              <Form.Control
-                className="mb-2"
-                id="inlineFormInput"
-                placeholder="2020-12-30"
-                type="date"
-                ref={DateRef}
-                required
-              />
-            </Col>
-          </Form.Row>
+              <h3>Meeting Details:</h3>
+              <Form.Row className="align-items-center">
+                <Col xs="auto">
+                  <InputGroup className="mb-2">
+                    <InputGroup.Prepend>
+                      <InputGroup.Text>
+                        <GeoAlt />
+                      </InputGroup.Text>
+                    </InputGroup.Prepend>
+                    <Form.Control
+                      className="mb-2"
+                      id="inlineFormInput"
+                      placeholder="Insert address"
+                      ref={AddressRef}
+                      required
+                    />
+                  </InputGroup>
+                </Col>
+                <Col xs="auto">
+                  <Form.Control
+                    className="mb-2"
+                    id="inlineFormInput"
+                    placeholder="2020-12-30"
+                    type="date"
+                    ref={DateRef}
+                    required
+                  />
+                </Col>
+              </Form.Row>
 
-          <Form.Row className="align-items-center">
-            <Col xs="auto">
-              <Link to="/">Cancel</Link>
-            </Col>
-            <Col xs="auto">
-              <Button type="submit" className="mb-2" onClick={displayAlert}>
-                Submit
+              <Form.Row className="align-items-center">
+                <Col xs="auto">
+                  <Link to="/">Cancel</Link>
+                </Col>
+                <Col xs="auto">
+                  <Button type="submit" className="mb-2" onClick={displayAlert}>
+                    Submit
               </Button>
-            </Col>
-          </Form.Row>
-        </center>
-      </Form>
-    </div>
+                </Col>
+              </Form.Row>
+            </center>
+          </Form>
+        </div>}
+      {props.user && <Login />}
+    </center>
   );
 }
+
+
 
 AddMeetingPage.propTypes = {
   maleParticipants: PropTypes.oneOf([PropTypes.array, PropTypes.bool]),
@@ -201,12 +215,13 @@ AddMeetingPage.propTypes = {
 const mapStateToProps = createStructuredSelector({
   maleParticipants: selectMaleParticipants(),
   femaleParticipants: selectFemaleParticipants(),
+  user: makeSelectUser(),
   // getParticipantByID: participantId => makeSelectParticipantByID(participantId),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    addMeeting: meeting => dispatch(addMeeting(meeting)),
+    addMeeting: (meeting) => dispatch(addMeeting(meeting)),
     getParticipant: participantId => dispatch(getParticipant(participantId)),
   };
 }

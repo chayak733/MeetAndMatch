@@ -5,6 +5,7 @@ const router = express.Router();
 const BASE_DIR = __dirname.replace('middlewares', '');
 const jsonMeetingsPath = `${BASE_DIR}\\data\\meetingsData.json`;
 const jsonParticipantsPath = `${BASE_DIR}\\data\\participantsData.json`;
+const jsonMatchmakersPath = `${BASE_DIR}\\data\\matchmakersData.json`;
 const bodyParser = require('body-parser');
 
 router.use(
@@ -137,10 +138,25 @@ router.post('/deleteParticipant/:id', (req, res) => {
   });
 });
 
+router.get('/getUser/:name&:password', (req, res) => {
+  fs.readFile(jsonMatchmakersPath, 'utf8', (err, data) => {
+    const list = JSON.parse(data);
+    const { name, password } = req.params;
+    const item = _getValidatedItem(list, name, password);
+    res.end(JSON.stringify(item));
+  });
+});
+
+
 // Private functions
 const _getItem = (list, id) => {
   debugger;
   const currentItem = list.find(item => item.id.toString() === id.toString());
+  return currentItem;
+};
+
+const _getValidatedItem = (list, name, password) => {
+  const currentItem = list.find(item => (item.name.toString() === name.toString() && item.password.toString() === password.toString()));
   return currentItem;
 };
 

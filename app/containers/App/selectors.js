@@ -31,6 +31,12 @@ const makeSelectCurrentParticipant = () =>
     substate => substate.currentParticipant,
   );
 
+const makeSelectUser = () =>
+  createSelector(
+    selectRouter,
+    substate => substate.user,
+  );
+
 const makeSelectLoading = () =>
   createSelector(
     selectGlobal,
@@ -56,8 +62,8 @@ const makeSelectMeetingCard = () =>
       substate.meeting &&
       substate.meeting.map(meeting => ({
         id: meeting.id,
-        firstParticipant: meeting.firstParticipant,
-        secondParticipant: meeting.secondParticipant,
+        firstParticipant: meeting.firstParticipantId,
+        secondParticipant: meeting.secondParticipantId,
         date: meeting.date,
         address: meeting.address,
       })),
@@ -71,10 +77,11 @@ const makeSelectParticipantCard = () =>
       substate.participant.map(participant => ({
         id: participant.id,
         name: `${participant.firstName} ${participant.lastName}`,
-        dob: participant.dob,
+        dob: participant.dateOfBirth,
         gender: participant.gender,
+        status: participant.status,
         origin: participant.origin,
-        email: participant.email,
+        email: participant.mail,
         phone: participant.phone,
         resume: participant.resume,
       })),
@@ -87,7 +94,7 @@ const makeSelectMeetingEvent = () =>
       substate.meeting &&
       substate.meeting.map(meeting => ({
         id: meeting.id,
-        title: `${meeting.firstParticipant} - ${meeting.secondParticipant}`,
+        title: `${meeting.firstParticipantId} - ${meeting.secondParticipantId}`,
         start: meeting.date,
       })),
   );
@@ -104,6 +111,7 @@ export {
   makeSelectMeetings,
   makeSelectParticipantCard,
   makeSelectParticipants,
+  makeSelectUser,
   makeSelectLoading,
   makeSelectError,
   makeSelectCurrentMeeting,

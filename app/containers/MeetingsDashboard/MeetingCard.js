@@ -18,8 +18,8 @@ export default function MeetingCard(props) {
 }
 
 MeetingCard.propTypes = {
-    firstParticipant: PropTypes.string,
-    secondParticipant: PropTypes.string,
+    firstParticipant: PropTypes.number,
+    secondParticipant: PropTypes.number,
     address: PropTypes.string,
     date: PropTypes.string,
 };

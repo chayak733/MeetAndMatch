@@ -39,7 +39,6 @@ export function AddParticipant(props) {
   useInjectReducer({ key: 'addParticipant', reducer });
   useInjectSaga({ key: 'addParticipant', saga });
   const [showAlert, setShowAlert] = useState(false);
-  // const [resume, setResume] = useState(false);
   const [origin, setOrigin] = useState('Origin');
 
   const FirstNameRef = createRef();
@@ -63,32 +62,30 @@ export function AddParticipant(props) {
       id: uuid(),
       firstName: FirstNameRef.current.value,
       lastName: LastNameRef.current.value,
-      dob: DobRef.current.value,
+      dateOfBirth: DobRef.current.value,
       gender: GenderRef.current.value,
-      origin,
-      email: EmailRef.current.value,
-      phone: PhoneRef.current.value,
-      // resume: ResumeRef.current.value,
-      resume:
-        'file:///C:/yafit/IDeal/client/%D7%A8%D7%96%D7%95%D7%9E%D7%94.pdf',
-      // resume,
       status: StatusRef.current.value,
+      origin,
+      resume:
+        'file:///C:/yafit/IDeal/client/D7%94.pdf',
+      mail: EmailRef.current.value,
+      phone: PhoneRef.current.value,
     };
     props.addParticipant(newParticipant);
     // setShowAlert(true);
-    displayAlert();
+    // displayAlert();
   };
 
   return (
     <div>
-      {showAlert && (
+      {/* {showAlert && (
         <Alert variant="light">
           <Alert.Heading>THE PARTICIPANT WAS ADDED SUCCESSFULY!</Alert.Heading>
           <Link to="/participantsDashboard" id="alertLink">
             Move to Participants Dashboard
           </Link>
         </Alert>
-      )}
+      )} */}
       <Form onSubmit={mapFormToDispatch}>
         <center>
           <h3>Personal Details:</h3>
@@ -151,9 +148,9 @@ export function AddParticipant(props) {
             </Col>
 
             <Col xs="auto" id="dateInputCol">
-              <InputGroup className="mb-2">
-                <InputGroup.Prepend>
-                  <InputGroup.Text>dob</InputGroup.Text>
+              <InputGroup className="mb-2" id="dob-mb-2">
+                <InputGroup.Prepend id="dobInputPrepend">
+                  <InputGroup.Text id="dobInputText">dob</InputGroup.Text>
                 </InputGroup.Prepend>
                 <Form.Control
                   className="mb-2"
@@ -202,6 +199,7 @@ export function AddParticipant(props) {
           <h4>Upload resume</h4>
           <Form.Row>
             <input
+              id="input-file"
               type="file"
               accept=".pdf,.docx"
               ref={ResumeRef}
