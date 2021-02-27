@@ -23,8 +23,8 @@ import UpdateMeeting from 'containers/UpdateMeeting';
 import UpdateParticipant from 'containers/UpdateParticipant';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import ParticipantDashboard from 'containers/ParticipantDashboard';
-import AdminDashboard from 'C:/yafit/git_MeetAndMatch/MeetAndMatch/app/containers/AdminDashboard';
-import Login from 'containers/Login';
+import AdminDashboard from '../AdminDashboard';
+import Login from '../Login';
 import SignIn from '../SignIn';
 import saga from './saga';
 import { loadMeetings, loadParticipants, getMeetingsByMM } from './actions';
@@ -40,6 +40,8 @@ import {
 } from './selectors';
 // import reducer from './reducer';
 import Header from '../../components/Header';
+import AdminHeader from '../../components/AdminHeader';
+import MatchmakerHeader from '../../components/MatchmakerHeader';
 import Footer from '../../components/Footer';
 import 'style.scss';
 
@@ -59,10 +61,15 @@ export function App(props) {
     if (!props.meetings) props.onLoadMeetings(1);
   }, []);
 
+  const isAdmin = (props.user == 'admin123');
   return (
     <div>
       <center>
         <Header />
+        <AdminHeader />
+        <MatchmakerHeader />
+        {/* {isAdmin && <AdminHeader />}
+        {props.user && !isAdmin && <MatchmakerHeader />} */}
         {props.isLoading && <div className="loading">loading...</div>}
         {props.error && (
           <div className="error">oops! error occurred... {props.error}</div>
@@ -96,7 +103,7 @@ export function App(props) {
             )}
           />
           <Route component={NotFoundPage} />
-          <Route path="/login" component={() => <Login />} />
+          <Route path="/login" component={<Login />} />
           <Route path="/signin" component={() => <SignIn />} />
           <Route path="/adminDashboard" component={() => <AdminDashboard />} />
         </Switch>

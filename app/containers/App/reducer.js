@@ -66,7 +66,7 @@ export const initialState = {
   participant: false,
   statistics: false,
   matchmakers: false,
-  user: false,
+  user: 'admin123',
   currentMeeting: false,
   currentParticipant: null,
 };
@@ -176,6 +176,7 @@ const globalReducer = (state = initialState, action) => {
 
     case ADD_PARTICIPANT_SUCCESS:
     case UPDATE_PARTICIPANT_SUCCESS:
+      debugger;
       return {
         ...state,
         loading: false,

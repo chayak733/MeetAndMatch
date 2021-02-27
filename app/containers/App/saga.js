@@ -132,10 +132,11 @@ export function* removeMeeting(action) {
   const requestURL = `${baseUrl}/Meeting/deleteMeeting/${action.meeting.id}`;
 
   const options = {
-    method: 'POST',
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
+    body: JSON.stringify(action.meeting),
   };
 
   try {
@@ -209,10 +210,11 @@ export function* removeParticipant(action) {
   debugger;
   const requestURL = `${baseUrl}/Participant/deleteParticipant/${action.participant.id}`;
   const options = {
-    method: 'POST',
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
+    body: JSON.stringify(action.participant),
   };
 
   try {

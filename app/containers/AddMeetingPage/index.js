@@ -41,8 +41,10 @@ import { Login } from '../Login';
 
 export function AddMeetingPage(props) {
   const [showAlert, setShowAlert] = useState(false);
-  const [maleTitle, setMaleTitle] = useState(['Male Participant', '']);
-  const [femaleTitle, setFemaleTitle] = useState(['Female Participant', '']);
+  const [maleTitle, setMaleTitle] = useState('Male Participant');
+  const [femaleTitle, setFemaleTitle] = useState('Female Participant');
+  const [maleId, setMaleId] = useState(false);
+  const [femaleId, setFemaleId] = useState(false);
   const [user, setUser] = useState(false)
 
   useEffect(() => {
@@ -61,8 +63,8 @@ export function AddMeetingPage(props) {
     const newMeeting = {
       id: uuid(),
       matchMakerId: props.user,
-      firstParticipantId: maleTitle[1],
-      secondParticipantId: femaleTitle[1],
+      firstParticipantId: maleId,
+      secondParticipantId: femaleId,
       address: AddressRef.current.value,
       date: DateRef.current.value,
     };
@@ -71,14 +73,18 @@ export function AddMeetingPage(props) {
   };
 
   const handleSelect = participant => {
-    if (participant.gender === 'male' || participant.gender === 'Male')
-      setMaleTitle([`${participant.firstName} ${participant.lastName}`, participant.id]);
-    else if (participant.gender === 'female' || participant.gender === 'Female')
-      setFemaleTitle([`${participant.firstName} ${participant.lastName}`, participant.id]);
+    if (participant.gender === 'male' || participant.gender === 'Male') {
+      setMaleTitle(`${participant.firstName} ${participant.lastName}`);
+      setMaleId(participant.id);
+    }
+    else if (participant.gender === 'female' || participant.gender === 'Female') {
+      setFemaleTitle(`${participant.firstName} ${participant.lastName}`);
+      setFemaleId(participant.id);
+    }
   };
 
   const checkFunc = () => {
-    props.getParticipant('5fbee74a4631c661f2c28397');
+    const current = props.getParticipant('5fbee74a4631c661f2c28397');
     console.log(current);
   };
 
@@ -101,7 +107,7 @@ export function AddMeetingPage(props) {
 
   return (
     <center>
-      {!props.user &&
+      {props.user &&
         <div>
           {showAlert && (
             <Alert variant="light">
@@ -197,7 +203,6 @@ export function AddMeetingPage(props) {
             </center>
           </Form>
         </div>}
-      {props.user && <Login />}
     </center>
   );
 }

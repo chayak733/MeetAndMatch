@@ -15,7 +15,8 @@ form{
 
 .form-control{
   margin: 0vw;
-  background-color: #ddd0bd;
+  // background-color: #ddd0bd;
+  background-color: #fff;
   &::placeholder {
     // background-color: #ddd0bd !important;
     color: #42392c !important;
@@ -119,7 +120,7 @@ color: #ffffff !important;
   width: min-content;
   border: 1px solid #42392c;
   ::placeholder{
-    background-color: #ddd0bd;
+    // background-color: #ddd0bd;
   }
 }
 
@@ -129,7 +130,7 @@ color: #ffffff !important;
 }
 
 .kpkskh{
-  margin-top: 0.75vh !important;
+  margin-top: 1vh !important;
 }
 
 #dateInputCol{
