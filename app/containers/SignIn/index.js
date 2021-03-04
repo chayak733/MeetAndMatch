@@ -29,7 +29,7 @@ import Link from './Link';
 import Button from '../../components/Button';
 import { addMatchmaker } from '../App/actions';
 
-export function SignIn() {
+export function SignIn(props) {
   useInjectReducer({ key: 'signIn', reducer });
   useInjectSaga({ key: 'signIn', saga });
 
@@ -39,6 +39,8 @@ export function SignIn() {
   const PhoneRef = createRef();
 
   const mapFormToDispatch = () => {
+    debugger;
+    event.preventDefault();
     const newMatchMaker = {
       matchMakerId: uuid(),
       userName: UserNameRef.current.value,
@@ -139,16 +141,17 @@ export function SignIn() {
 }
 
 SignIn.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  dispatch: PropTypes.func
 };
 
 const mapStateToProps = createStructuredSelector({
   signIn: makeSelectSignIn(),
 });
 
-function mapDispatchToProps() {
+function mapDispatchToProps(dispatch) {
+  debugger;
   return {
-    addMatchmaker: (mm) => addMatchmaker(mm),
+    addMatchmaker: (mm) => dispatch(addMatchmaker(mm)),
   };
 }
 

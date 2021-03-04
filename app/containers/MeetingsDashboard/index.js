@@ -12,14 +12,23 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
 import { useInjectReducer } from 'utils/injectReducer';
+import { makeSelectParticipants } from '../App/selectors';
 import reducer from '../App/reducer';
 import messages from './messages';
 import MeetingCard from './MeetingCard';
 import { delMeeting } from '../App/actions';
 import Link from './Link';
 
-export function MeetingsDashboard({ meetings, deleteMeeting }) {
+export function MeetingsDashboard({ participants, meetings, deleteMeeting }) {
   useInjectReducer({ key: 'meetingsDashboard', reducer });
+
+  const getParticipantName = pId => {
+    //return pId;
+
+    if (!participants) return "";
+    const ptc = participants.filter(p => p.id == pId)
+    return ptc.length > 0 ? `${ptc[0].firstName} ${ptc[0].lastName}` : "";
+  }
 
   const cardsArr =
     meetings &&
@@ -27,8 +36,8 @@ export function MeetingsDashboard({ meetings, deleteMeeting }) {
       <div className="meetingCard">
         <MeetingCard
           key={card.id}
-          firstParticipant={card.firstParticipant}
-          secondParticipant={card.secondParticipant}
+          firstParticipant={getParticipantName(card.firstParticipant)}
+          secondParticipant={getParticipantName(card.secondParticipant)}
           date={card.date}
           address={card.address}
         />
@@ -54,9 +63,12 @@ export function MeetingsDashboard({ meetings, deleteMeeting }) {
 MeetingsDashboard.propTypes = {
   meetings: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   deleteMeeting: PropTypes.func,
+  participants: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
 };
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  //   // participants: makeSelectParticipants(),
+});
 
 function mapDispatchToProps(dispatch) {
   return { deleteMeeting: meeting => dispatch(delMeeting(meeting)) };

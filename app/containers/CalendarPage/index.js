@@ -52,7 +52,7 @@ export function CalendarPage(props) {
 
 CalendarPage.propTypes = {
   events: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
-  user: PropTypes.object,
+  user: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 };
 
 const mapStateToProps = createStructuredSelector({

@@ -3,7 +3,7 @@ a{
 }
 
 .fc-col-header-cell-cushion{
-  color: #7c2f49;
+  color: #7c2f49 !important;
 }
 
 .fc-theme-standard{
@@ -16,7 +16,7 @@ a{
   }
   
   .fc-button-group{
-    background-color: #7c2f49;
+    background-color: #7c2f49 !important;
   }
 
   .fc-view-harness{
@@ -30,13 +30,13 @@ a{
 
 
   .fc-day-today{
-    background-color: #a096887a;
+    background-color: #a096887a !important;
   }
 
   .fc-event-title-container{
-    background-color: #7c2f49;
+    background-color: #7c2f49 !important;
     border: none;
-    color: #ffffff;
+    color: #ffffff !important;
     font-weight: normal;
   }
 
@@ -52,9 +52,9 @@ a{
     position: absolute;
     bottom: 130%;
     left: 20%;
-    background: #726658;
+    background: #726658 !important;
     padding: 5px 15px;
-    color: ffffff;
+    color: ffffff !important;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
@@ -74,7 +74,7 @@ a{
     position: absolute;
     width: 0;
     height: 0;
-    border-top: 20px solid #726658;
+    border-top: 20px solid #726658 !important;
     border-left: 20px solid transparent;
     border-right: 20px solid transparent;
     -webkit-transition: all 0.5s ease;
@@ -98,13 +98,13 @@ a{
   }
 
   .fc-popover-header{
-    background-color: #776a5f;
+    background-color: #776a5f !important;
   }
 
   .fc-popover-body{
-    background-color: #c2b29a;
+    background-color: #c2b29a !important;
   }
 
   .fc-sticky{
-    border: 1px solid #7c2f49;
+    border: 1px solid #7c2f49 !important;
   }

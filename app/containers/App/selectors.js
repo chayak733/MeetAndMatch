@@ -31,9 +31,21 @@ const makeSelectCurrentParticipant = () =>
     substate => substate.currentParticipant,
   );
 
+const makeSelectMatchmakers = () =>
+  createSelector(
+    selectGlobal,
+    substate => substate.matchmakers,
+  );
+
+const makeSelectStatistics = () =>
+  createSelector(
+    selectGlobal,
+    substate => substate.statistics,
+  );
+
 const makeSelectUser = () =>
   createSelector(
-    selectRouter,
+    selectGlobal,
     substate => substate.user,
   );
 
@@ -111,6 +123,8 @@ export {
   makeSelectMeetings,
   makeSelectParticipantCard,
   makeSelectParticipants,
+  makeSelectMatchmakers,
+  makeSelectStatistics,
   makeSelectUser,
   makeSelectLoading,
   makeSelectError,

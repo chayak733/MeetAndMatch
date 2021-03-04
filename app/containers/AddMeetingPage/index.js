@@ -84,7 +84,7 @@ export function AddMeetingPage(props) {
   };
 
   const checkFunc = () => {
-    const current = props.getParticipant('5fbee74a4631c661f2c28397');
+    const current = props.getParticipant(1);
     console.log(current);
   };
 

@@ -102,29 +102,28 @@ export function ParticipantDashboard(props) {
     );
   }
 
-
   // function renderList(sortedParticipentList = participant) {
   // sortedParticipentList &&
-  // sortedParticipentList.map(card => (
+  // sortedParticipentList.map(participant => (
   const participantArr = props.participants &&
-    props.participants.map(card => (
+    props.participants.map(participant => (
       <div className="participantCard">
         <hr />
         <ParticipantCard
-          key={card.id}
-          name={card.name}
-          dob={card.dob}
-          gender={card.gender}
-          status={card.status}
-          origin={card.origin}
-          email={card.email}
-          phone={card.phone}
-          resume={card.resume}
+          key={participant.id}
+          name={participant.name}
+          dob={participant.dob}
+          gender={participant.gender}
+          status={participant.status}
+          origin={participant.origin}
+          email={participant.email}
+          phone={participant.phone}
+          resume={participant.resume}
         />
-        <button type="button" onClick={() => props.deleteParticipant(card)}>
+        <button type="button" onClick={() => props.deleteParticipant(participant)}>
           DELETE
         </button>
-        <Link to={`/updateParticipant/${card.id}`}>UPDATE</Link>
+        <Link to={`/updateParticipant/${participant.id}`}>UPDATE</Link>
       </div>
     ))
 
@@ -142,7 +141,6 @@ export function ParticipantDashboard(props) {
     </center>
   )
 }
-
 
 //   try {
 //     return (

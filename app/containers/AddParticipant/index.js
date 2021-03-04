@@ -40,15 +40,17 @@ export function AddParticipant(props) {
   useInjectSaga({ key: 'addParticipant', saga });
   const [showAlert, setShowAlert] = useState(false);
   const [origin, setOrigin] = useState('Origin');
+  const [gender, setGender] = useState('Gender');
+  const [status, setStatus] = useState('Status');
 
   const FirstNameRef = createRef();
   const LastNameRef = createRef();
   const DobRef = createRef();
-  const GenderRef = createRef();
+  //const GenderRef = createRef();
   const EmailRef = createRef();
   const PhoneRef = createRef();
   const ResumeRef = createRef();
-  const StatusRef = createRef();
+  //const StatusRef = createRef();
 
   const displayAlert = () => setShowAlert(true);
 
@@ -56,21 +58,31 @@ export function AddParticipant(props) {
   //   setResume(event.target.files[0]);
   // };
 
+  const onGenderChange = () => {
+    setGender(event.target.value)
+  }
+
+  const onStatusChange = () => {
+    setStatus(event.target.value)
+  }
+
   const mapFormToDispatch = () => {
+    debugger;
     event.preventDefault();
     const newParticipant = {
-      id: uuid(),
+      // id: uuid(),
       firstName: FirstNameRef.current.value,
       lastName: LastNameRef.current.value,
       dateOfBirth: DobRef.current.value,
-      gender: GenderRef.current.value,
-      status: StatusRef.current.value,
+      gender: gender,
+      status: status,
       origin,
       resume:
         'file:///C:/yafit/IDeal/client/D7%94.pdf',
       mail: EmailRef.current.value,
       phone: PhoneRef.current.value,
     };
+    console.log(newParticipant)
     props.addParticipant(newParticipant);
     // setShowAlert(true);
     // displayAlert();
@@ -214,7 +226,8 @@ export function AddParticipant(props) {
               className="radio"
               name="gender"
               value="male"
-              ref={GenderRef}
+              //ref={GenderRef}
+              onChange={onGenderChange}
             />
             <h6>Male</h6>
             <input
@@ -222,7 +235,8 @@ export function AddParticipant(props) {
               className="radio"
               name="gender"
               value="female"
-              ref={GenderRef}
+              //ref={GenderRef}
+              onChange={onGenderChange}
             />
             <h6>Female</h6>
           </Form.Row>
@@ -232,24 +246,24 @@ export function AddParticipant(props) {
               type="radio"
               className="radio"
               name="status"
-              value="single"
-              ref={StatusRef}
+              value="1"
+              onChange={onStatusChange}
             />
             <h6>Single</h6>
             <input
               type="radio"
               className="radio"
               name="status"
-              value="divorced"
-              ref={StatusRef}
+              value="2"
+              onChange={onStatusChange}
             />
             <h6>Divorced</h6>
             <input
               type="radio"
               className="radio"
               name="status"
-              value="widower"
-              ref={StatusRef}
+              value="3"
+              onChange={onStatusChange}
             />
             <h6>Widowe/r</h6>
           </Form.Row>

@@ -49,6 +49,7 @@ export function Login(props) {
 
 Login.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  validateUser: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({

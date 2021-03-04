@@ -23,20 +23,22 @@ import UpdateMeeting from 'containers/UpdateMeeting';
 import UpdateParticipant from 'containers/UpdateParticipant';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import ParticipantDashboard from 'containers/ParticipantDashboard';
-import AdminDashboard from '../AdminDashboard';
+import { AdminDashboard } from '../AdminDashboard1';
 import Login from '../Login';
 import SignIn from '../SignIn';
 import saga from './saga';
-import { loadMeetings, loadParticipants, getMeetingsByMM } from './actions';
+import { loadMeetings, loadParticipants, getMeetingsByMM, getUnapprovedMM, getStatistics } from './actions';
 import {
   makeSelectMeetingCard,
   makeSelectMeetingEvent,
   makeSelectMeetings,
   makeSelectParticipantCard,
   makeSelectParticipants,
+  makeSelectStatistics,
   makeSelectUser,
   makeSelectLoading,
   makeSelectError,
+  makeSelectMatchmakers,
 } from './selectors';
 // import reducer from './reducer';
 import Header from '../../components/Header';
@@ -50,26 +52,24 @@ export function App(props) {
   useInjectSaga({ key: 'app', saga });
 
   useEffect(() => {
-    if (props.user && !props.meetings) props.onLoadMeetings(props.user.id);
-  }, []);
-
-  useEffect(() => {
+    if (!props.user && !props.meetings) props.getMeetings();
     if (!props.participants) props.onLoadParticipants();
+    //if (props.meetings) props.onLoadMeetings(1);
+    if (!props.participants) props.onLoadParticipants();
+    if (!props.matchmakers) props.onLoadmatchmakers(1);
+    if (!props.statistics) props.getStatistics();
   }, []);
 
-  useEffect(() => {
-    if (!props.meetings) props.onLoadMeetings(1);
-  }, []);
-
+  // useEffect(() => {
+  //   if (props.user && !props.meetings) props.onLoadMeetings(props.user.id);
+  // }, []);
   const isAdmin = (props.user == 'admin123');
   return (
     <div>
       <center>
         <Header />
-        <AdminHeader />
-        <MatchmakerHeader />
-        {/* {isAdmin && <AdminHeader />}
-        {props.user && !isAdmin && <MatchmakerHeader />} */}
+        {isAdmin && <AdminHeader />}
+        {props.user && !isAdmin && <MatchmakerHeader />}
         {props.isLoading && <div className="loading">loading...</div>}
         {props.error && (
           <div className="error">oops! error occurred... {props.error}</div>
@@ -80,7 +80,7 @@ export function App(props) {
           <Route
             path="/meetingsDashboard"
             component={() => (
-              <MeetingsDashboard meetings={props.meetingCards} />
+              <MeetingsDashboard participants={props.participants} meetings={props.meetingCards} />
             )}
           />
           <Route
@@ -88,7 +88,7 @@ export function App(props) {
             component={() => <CalendarPage events={props.meetingEvents} />}
           />
           <Route path="/addParticipant" component={() => <AddParticipant />} />
-          <Route path="/statistics" component={() => <Statistics />} />
+          <Route path="/statistics" component={() => <Statistics statisticsList={props.statistics} />} />
           <Route
             path="/participantsDashboard"
             component={() => (
@@ -102,10 +102,10 @@ export function App(props) {
               <UpdateParticipant participant={participant} />
             )}
           />
-          <Route component={NotFoundPage} />
-          <Route path="/login" component={<Login />} />
+          <Route path="/login" component={() => <Login />} />
           <Route path="/signin" component={() => <SignIn />} />
-          <Route path="/adminDashboard" component={() => <AdminDashboard />} />
+          <Route path="/adminDashboard" component={() => <AdminDashboard matchmakers={props.matchmakers} />} />
+          <Route component={NotFoundPage} />
         </Switch>
         <Footer />
       </center>
@@ -132,6 +132,8 @@ const mapStateToProps = createStructuredSelector({
   meetings: makeSelectMeetings(),
   participantCards: makeSelectParticipantCard(),
   participants: makeSelectParticipants(),
+  matchmakers: makeSelectMatchmakers(),
+  statistics: makeSelectStatistics(),
   user: makeSelectUser(),
   isLoading: makeSelectLoading(),
   error: makeSelectError(),
@@ -139,8 +141,11 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
+    getMeetings: () => dispatch(loadMeetings()),
     onLoadMeetings: (mmId) => dispatch(getMeetingsByMM(mmId)),
     onLoadParticipants: () => dispatch(loadParticipants()),
+    onLoadmatchmakers: () => dispatch(getUnapprovedMM()),
+    getStatistics: () => dispatch(getStatistics()),
     dispatch,
   };
 }

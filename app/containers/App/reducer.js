@@ -147,7 +147,7 @@ const globalReducer = (state = initialState, action) => {
       };
 
     case GET_STATISTICS_SUCCESS:
-      return { ...state, loading: false, statistics: כבהכהג }
+      return { ...state, loading: false, statistics: action.participants }
 
     case LOGIN_USER_SUCCESS:
       return {
@@ -186,20 +186,20 @@ const globalReducer = (state = initialState, action) => {
 
     case DEL_MEETING_SUCCESS: {
       const newMeetingList = state.meeting.filter(
-        meeting => meeting.id !== action.mId,
+        meeting => meeting.id != action.mId,
       );
       return {
         ...state,
         loading: false,
         error: false,
-        meeting: [...state.meeting, newMeetingList],
+        meeting: newMeetingList,
         currentMeeting: false,
       };
     }
 
     case DEL_PARTICIPANT_SUCCESS: {
       const newParticipantList = state.participant.filter(
-        participant => participant.id !== action.pId,
+        participant => participant.id != action.pId,
       );
       return {
         ...state,

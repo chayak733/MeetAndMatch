@@ -60,7 +60,7 @@ import {
 const baseUrl = 'https://localhost:44374/api';
 
 // MEETINGS FUNCTIONS
-export function* getMeetings(action) {
+export function* getMeetings() {
   const requestURL = `${baseUrl}/Meeting/Meetingslist`;
   try {
     const meetings = yield call(request, requestURL);

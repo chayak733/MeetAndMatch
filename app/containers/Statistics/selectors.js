@@ -18,7 +18,7 @@ const selectGlobal = state => state.global || initialState;
 const SelectStatisticsParticipants = () =>
   createSelector(
     selectGlobal,
-    substate => substate,
+    substate => substate.statistics,
   );
 
 export default SelectStatisticsParticipants;

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './style.scss';
+// import './style.scss';
 
 export default function ParticipantCard(props) {
     //     const onClickHandler = resume => {
@@ -14,7 +14,7 @@ export default function ParticipantCard(props) {
         <>
             <center>
                 <br />
-                <h3>{props.name}</h3>
+                <h3>{props.firstName} {props.lastName}</h3>
                 <h5>
                     {props.dob}, {props.gender}, {props.status}, {props.origin}
                 </h5>
