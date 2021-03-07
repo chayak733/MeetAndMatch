@@ -4,7 +4,7 @@
  *
  */
 
-import React, { createRef } from 'react';
+import React, { createRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -33,13 +33,14 @@ export function SignIn(props) {
   useInjectReducer({ key: 'signIn', reducer });
   useInjectSaga({ key: 'signIn', saga });
 
+  const [showAlert, setShowAlert] = useState(false);
+
   const UserNameRef = createRef();
   const PasswordRef = createRef();
   const EmailRef = createRef();
   const PhoneRef = createRef();
 
   const mapFormToDispatch = () => {
-    debugger;
     event.preventDefault();
     const newMatchMaker = {
       matchMakerId: uuid(),
@@ -49,12 +50,23 @@ export function SignIn(props) {
       phone: PhoneRef.current.value,
       isRegistered: false,
     }
-    props.addMatchmaker(newMatchMaker);
+    props.addMM(newMatchMaker);
+    setShowAlert(true);
   }
   return (
     <>
       <Form onSubmit={mapFormToDispatch}>
         <center>
+          {showAlert && (
+            <Alert variant="light">
+              <Alert.Heading>YOU WERE SIGNED IN SUCCESFULY!</Alert.Heading>
+              <h4>Wate for the administor to send your approval to your email</h4>
+              <Link to="/MeetingsDashboard" id="alertLink">
+                Move to Meetings Dashboard
+          </Link>
+            </Alert>
+          )}
+
           <h3>Personal Details:</h3>
           <Form.Row className="align-items-center">
             <Col xs="auto">
@@ -149,9 +161,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 function mapDispatchToProps(dispatch) {
-  debugger;
   return {
-    addMatchmaker: (mm) => dispatch(addMatchmaker(mm)),
+    addMM: mm => dispatch(addMatchmaker(mm)),
   };
 }
 

@@ -7,7 +7,7 @@ a{
 }
 
 .fc-theme-standard{
-    width: 75%;
+    width: 50%;
     height: 60vh;
   }
   
@@ -31,6 +31,22 @@ a{
 
   .fc-day-today{
     background-color: #a096887a !important;
+  }
+
+  .fc-event{
+    background-color: #7c2f49 !important;
+    border: none;
+    color: #ffffff !important;
+    font-weight: normal;
+  }
+
+  .fc-event-time{
+    display: none;
+  }
+
+  .fc-daygrid-event-dot{
+    color: #ffffff !important;
+    border-color: #ffffff;
   }
 
   .fc-event-title-container{

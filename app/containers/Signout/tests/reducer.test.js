@@ -1,9 +1,9 @@
 // import produce from 'immer';
-import adminDashboardReducer from '../reducer';
+import signoutReducer from '../reducer';
 // import { someAction } from '../actions';
 
 /* eslint-disable default-case, no-param-reassign */
-describe('adminDashboardReducer', () => {
+describe('signoutReducer', () => {
   let state;
   beforeEach(() => {
     state = {
@@ -13,7 +13,7 @@ describe('adminDashboardReducer', () => {
 
   it('returns the initial state', () => {
     const expectedResult = state;
-    expect(adminDashboardReducer(undefined, {})).toEqual(expectedResult);
+    expect(signoutReducer(undefined, {})).toEqual(expectedResult);
   });
 
   /**

@@ -1,6 +1,6 @@
 /*
  *
- * AdminDashboard actions
+ * Signout actions
  *
  */
 

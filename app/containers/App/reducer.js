@@ -66,9 +66,14 @@ export const initialState = {
   participant: false,
   statistics: false,
   matchmakers: false,
-  user: 'admin123',
+  user: {
+    id: 0,
+    userName: 'admin123',
+    password: 'admin123',
+    mail: 'meetandmatch101@gmail.com',
+  },
   currentMeeting: false,
-  currentParticipant: null,
+  currentParticipant: false,
 };
 
 const globalReducer = (state = initialState, action) => {
@@ -135,6 +140,13 @@ const globalReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         currentMeeting: action.meeting,
+      };
+
+    case GET_PARTICIPANT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        currentParticipant: action.participant,
       };
 
     case LOAD_PARTICIPANTS_SUCCESS:

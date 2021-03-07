@@ -68,7 +68,6 @@ export function AddMeetingPage(props) {
       address: AddressRef.current.value,
       date: DateRef.current.value,
     };
-    // console.log(newMeeting);
     props.addMeeting(newMeeting);
   };
 
@@ -118,9 +117,9 @@ export function AddMeetingPage(props) {
             </Alert>
           )}
 
-          <button type="submit" onClick={checkFunc}>
+          {/* <button type="submit" onClick={checkFunc}>
             get participant
-        </button>
+        </button> */}
 
           <Form onSubmit={mapFormToDispatch}>
             <center>

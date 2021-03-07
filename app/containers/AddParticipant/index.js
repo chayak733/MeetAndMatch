@@ -89,7 +89,7 @@ export function AddParticipant(props) {
   };
 
   return (
-    <div>
+    <div id="add-ptc-body">
       {/* {showAlert && (
         <Alert variant="light">
           <Alert.Heading>THE PARTICIPANT WAS ADDED SUCCESSFULY!</Alert.Heading>

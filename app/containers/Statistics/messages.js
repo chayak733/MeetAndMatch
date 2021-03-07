@@ -11,6 +11,6 @@ export const scope = 'app.containers.ParticipantsDashboard';
 export default defineMessages({
   header: {
     id: `${scope}.header`,
-    defaultMessage: 'This is the statistics container!',
+    defaultMessage: `NO MEETING HAS BEEN SCHEDUELED TO THESE ${"\n"} PARTICIPANTS DURING THE LAST MONTH`,
   },
 });

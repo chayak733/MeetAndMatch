@@ -160,7 +160,6 @@ export function* getParticipants() {
 }
 
 export function* getParticipantById(action) {
-  debugger;
   const requestURL = `${baseUrl}/Participant/getParticipantById/${action.participantId}`;
 
   try {
@@ -207,7 +206,6 @@ export function* updateParticipant(action) {
 }
 
 export function* removeParticipant(action) {
-  debugger;
   const requestURL = `${baseUrl}/Participant/deleteParticipant/${action.participant.id}`;
   const options = {
     method: 'PUT',
@@ -238,8 +236,8 @@ export function* getStatistics() {
 }
 
 // MATCHMAKER FUNCTIONS
-export function* loginUser() {
-  const requestURL = `${baseUrl}/MatchMaker/Login/${action.user.email}&${action.user.password}`;
+export function* loginUser(action) {
+  const requestURL = `${baseUrl}/MatchMaker/Login/${action.user.email}/${action.user.password}`;
   try {
     const user = yield call(request, requestURL);
     yield put(loginUserSuccess(user));
@@ -258,7 +256,7 @@ export function* getUnapprovedMM() {
   }
 }
 
-export function* addMatchmaker() {
+export function* addMatchmaker(action) {
   const requestURL = `${baseUrl}/Matchmaker/addMatchmaker`;
   const options = {
     method: 'POST',
@@ -275,7 +273,7 @@ export function* addMatchmaker() {
   }
 }
 
-export function* approveMatchmaker() {
+export function* approveMatchmaker(action) {
   const requestURL = `${baseUrl}/MatchMaker/ApproveMatchmaker/${action.mm.id}`;
   try {
     yield call(request, requestURL);

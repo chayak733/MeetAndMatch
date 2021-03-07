@@ -26,6 +26,7 @@ import ParticipantDashboard from 'containers/ParticipantDashboard';
 import { AdminDashboard } from '../AdminDashboard1';
 import Login from '../Login';
 import SignIn from '../SignIn';
+import Signout from '../Signout';
 import saga from './saga';
 import { loadMeetings, loadParticipants, getMeetingsByMM, getUnapprovedMM, getStatistics } from './actions';
 import {
@@ -42,6 +43,7 @@ import {
 } from './selectors';
 // import reducer from './reducer';
 import Header from '../../components/Header';
+import UserHeader from '../../components/UserHeader';
 import AdminHeader from '../../components/AdminHeader';
 import MatchmakerHeader from '../../components/MatchmakerHeader';
 import Footer from '../../components/Footer';
@@ -52,9 +54,9 @@ export function App(props) {
   useInjectSaga({ key: 'app', saga });
 
   useEffect(() => {
-    if (!props.user && !props.meetings) props.getMeetings();
+    if (!props.meetings) props.getMeetings();
+    // if (props.user && !props.meetings) props.onLoadMeetings(props.user.id);
     if (!props.participants) props.onLoadParticipants();
-    //if (props.meetings) props.onLoadMeetings(1);
     if (!props.participants) props.onLoadParticipants();
     if (!props.matchmakers) props.onLoadmatchmakers(1);
     if (!props.statistics) props.getStatistics();
@@ -63,11 +65,13 @@ export function App(props) {
   // useEffect(() => {
   //   if (props.user && !props.meetings) props.onLoadMeetings(props.user.id);
   // }, []);
-  const isAdmin = (props.user == 'admin123');
+  const isAdmin = (props.user.mail == 'meetandmatch101@gmail.com');
   return (
     <div>
       <center>
         <Header />
+        {/* {!props.user && <Header />}
+        {props.user && <UserHeader />} */}
         {isAdmin && <AdminHeader />}
         {props.user && !isAdmin && <MatchmakerHeader />}
         {props.isLoading && <div className="loading">loading...</div>}
@@ -80,12 +84,12 @@ export function App(props) {
           <Route
             path="/meetingsDashboard"
             component={() => (
-              <MeetingsDashboard participants={props.participants} meetings={props.meetingCards} />
+              <MeetingsDashboard user={props.user} participants={props.participants} meetings={props.meetingCards} />
             )}
           />
           <Route
             path="/calendar"
-            component={() => <CalendarPage events={props.meetingEvents} />}
+            component={() => <CalendarPage user={props.user} participants={props.participants} events={props.meetingEvents} />}
           />
           <Route path="/addParticipant" component={() => <AddParticipant />} />
           <Route path="/statistics" component={() => <Statistics statisticsList={props.statistics} />} />
@@ -104,6 +108,7 @@ export function App(props) {
           />
           <Route path="/login" component={() => <Login />} />
           <Route path="/signin" component={() => <SignIn />} />
+          <Route path="/signout" component={() => <Signout />} />
           <Route path="/adminDashboard" component={() => <AdminDashboard matchmakers={props.matchmakers} />} />
           <Route component={NotFoundPage} />
         </Switch>

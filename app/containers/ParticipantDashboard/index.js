@@ -17,7 +17,7 @@ import makeSelectParticipants from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
-import { delParticipant } from '../App/actions';
+import { delParticipant, getParticipant } from '../App/actions';
 import ParticipantCard from './ParticipantCard';
 import Link from './Link';
 import { DropdownButton, Dropdown, Item } from 'react-bootstrap';
@@ -102,17 +102,20 @@ export function ParticipantDashboard(props) {
     );
   }
 
+  const parseDate = (date) => {
+    date = String(date).split('T');
+    return date[0];
+  }
   // function renderList(sortedParticipentList = participant) {
   // sortedParticipentList &&
   // sortedParticipentList.map(participant => (
   const participantArr = props.participants &&
     props.participants.map(participant => (
       <div className="participantCard">
-        <hr />
         <ParticipantCard
           key={participant.id}
           name={participant.name}
-          dob={participant.dob}
+          dob={parseDate(participant.dob)}
           gender={participant.gender}
           status={participant.status}
           origin={participant.origin}
@@ -123,7 +126,8 @@ export function ParticipantDashboard(props) {
         <button type="button" onClick={() => props.deleteParticipant(participant)}>
           DELETE
         </button>
-        <Link to={`/updateParticipant/${participant.id}`}>UPDATE</Link>
+        <Link to={`/updateParticipant/${participant.id}`} onClick={() => props.getParticipantById(participant.id)}>UPDATE</Link>
+        <hr />
       </div>
     ))
 
@@ -173,6 +177,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
+    getParticipantById: participant => dispatch(getParticipant(participant)),
     deleteParticipant: participant => dispatch(delParticipant(participant)),
   };
 }

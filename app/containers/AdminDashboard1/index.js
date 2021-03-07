@@ -13,7 +13,6 @@ import { compose } from 'redux';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
-// import { makeSelectUser, makeSelectMatchmakers } from '../App/selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
@@ -23,37 +22,38 @@ import { getUnapprovedMM, approveMatchmaker, delMatchmaker } from '../App/action
 export function AdminDashboard(props) {
   useInjectReducer({ key: 'adminDashboard', reducer });
   useInjectSaga({ key: 'adminDashboard', saga });
-  // useEffect(() => {
-  //   if (props.matchmakers) props.getMatchmakers();
-  // }, []);
+
+  const Accept = (card) => {
+    props.approveMM(card);
+  }
+
+  const Ignore = (card) => {
+    props.deleteMM(card);
+  }
+
   const matchmakersArr = props.matchmakers && props.matchmakers.map(card => (
     <div className="MatchmakerCard">
       <MatchmakerCard
         key={card.id}
         userName={card.userName}
-        email={card.email}
+        email={card.mail}
         phone={card.phone}
       />
-      <button type="button" onClick={() => props.approveMM(card)}>
+      <button type="button" onClick={() => Accept(card)}>
         ACCEPT
       </button>
-      <button type="button" onClick={() => props.deleteMM(card)}>
+      <button type="button" onClick={() => Ignore(card)}>
         IGNORE
       </button>
       <hr />
     </div>
   ))
 
-  // const isAdmin = (props.user == 'admin@gmail.com');
-  const isAdmin = true;
-  debugger;
   return (
-    // (isAdmin &&
     <div>
-      <FormattedMessage {...messages.header} />
+      <h3><FormattedMessage {...messages.header} /></h3>
       {matchmakersArr}
     </div>
-    // (!isAdmin && <h4>You must be an administor to access this page</h4>)
   );
 }
 
@@ -63,16 +63,13 @@ AdminDashboard.propTypes = {
   // user: PropTypes.oneOfType([PropTypes.object, PropTypes.bool])
 };
 
-const mapStateToProps = createStructuredSelector({
-  // user: makeSelectUser(),
-  // matchmakers: makeSelectMatchmakers(),
-});
+const mapStateToProps = createStructuredSelector({});
 
 function mapDispatchToProps(dispatch) {
   return {
     getMatchmakers: () => dispatch(getUnapprovedMM()),
-    approveMM: (mm) => dispatch(approveMatchmaker(mm)),
-    deleteMM: (mm) => dispatch(delMatchmaker(mm)),
+    approveMM: mm => dispatch(approveMatchmaker(mm)),
+    deleteMM: mm => dispatch(delMatchmaker(mm)),
   };
 }
 

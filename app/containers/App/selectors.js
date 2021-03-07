@@ -40,7 +40,18 @@ const makeSelectMatchmakers = () =>
 const makeSelectStatistics = () =>
   createSelector(
     selectGlobal,
-    substate => substate.statistics,
+    substate => substate.statistics &&
+      substate.statistics.map(participant => ({
+        id: participant.id,
+        name: `${participant.firstName} ${participant.lastName}`,
+        dob: participant.dateOfBirth,
+        gender: participant.gender,
+        status: participant.status,
+        origin: participant.origin,
+        email: participant.mail,
+        phone: participant.phone,
+        resume: participant.resume,
+      })),
   );
 
 const makeSelectUser = () =>
@@ -74,6 +85,7 @@ const makeSelectMeetingCard = () =>
       substate.meeting &&
       substate.meeting.map(meeting => ({
         id: meeting.id,
+        mmId: meeting.matchMakerId,
         firstParticipant: meeting.firstParticipantId,
         secondParticipant: meeting.secondParticipantId,
         date: meeting.date,
@@ -106,7 +118,9 @@ const makeSelectMeetingEvent = () =>
       substate.meeting &&
       substate.meeting.map(meeting => ({
         id: meeting.id,
-        title: `${meeting.firstParticipantId} - ${meeting.secondParticipantId}`,
+        mmId: meeting.matchMakerId,
+        firstParticipantId: meeting.firstParticipantId,
+        secondParticipantId: meeting.secondParticipantId,
         start: meeting.date,
       })),
   );

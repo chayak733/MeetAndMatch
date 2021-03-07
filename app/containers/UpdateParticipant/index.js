@@ -4,12 +4,13 @@
  *
  */
 
-import React, { useState, createRef } from 'react';
+import React, { useState, useEffect, createRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-
+import { getParticipant, updateParticipant } from '../App/actions';
+import { makeSelectCurrentParticipant } from '../App/selectors';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -33,6 +34,12 @@ export function UpdateParticipant(props) {
   useInjectReducer({ key: 'updateParticipant', reducer });
   useInjectSaga({ key: 'updateParticipant', saga });
 
+  // useEffect(() => {
+  //   debugger;
+  //   props.getParticipantById(1);
+  //   // props.getParticipantById(props.participant.match.params.participant);
+  // }, []);
+
   const [showAlert, setShowAlert] = useState(false);
   const [origin, setOrigin] = useState('Origin');
 
@@ -52,7 +59,7 @@ export function UpdateParticipant(props) {
     console.log(event.target.files[0]);
   };
 
-  const { participantId } = props.participant.match.params.participant;
+  // const { participantId } = props.participant.match.params.participant;
 
   const mapFormToDispatch = () => {
     event.preventDefault();
@@ -69,7 +76,7 @@ export function UpdateParticipant(props) {
       status: StatusRef.current.value,
     };
     setShowAlert(true);
-    props.updateParticipant(newParticipant);
+    props.updParticipant(newParticipant);
   };
 
   return (
@@ -95,7 +102,7 @@ export function UpdateParticipant(props) {
                 </InputGroup.Prepend>
                 <FormControl
                   id="inlineFormInputGroup"
-                  placeholder="Insert first Name"
+                  placeholder={props.currParticipant.firstName}
                   ref={FirstNameRef}
                   required
                 />
@@ -110,7 +117,7 @@ export function UpdateParticipant(props) {
                 </InputGroup.Prepend>
                 <FormControl
                   id="inlineFormInputGroup"
-                  placeholder="Insert last Name"
+                  placeholder={props.currParticipant.lastName}
                   ref={LastNameRef}
                   required
                 />
@@ -151,7 +158,7 @@ export function UpdateParticipant(props) {
                 <Form.Control
                   className="mb-2"
                   id="inlineFormInput"
-                  placeholder="2020-12-30"
+                  placeholder={props.currParticipant.dob}
                   type="date"
                   ref={DobRef}
                   required
@@ -170,7 +177,7 @@ export function UpdateParticipant(props) {
                 </InputGroup.Prepend>
                 <FormControl
                   id="inlineFormInputGroup"
-                  placeholder="Insert phone number"
+                  placeholder={props.currParticipant.phone}
                   type="tel"
                   pattern="[0-9]{10}"
                   maxLength="10"
@@ -185,7 +192,7 @@ export function UpdateParticipant(props) {
                 </InputGroup.Prepend>
                 <FormControl
                   id="inlineFormInputGroup"
-                  placeholder="example@gmail.com"
+                  placeholder={props.currParticipant.email}
                   type="email"
                   ref={EmailRef}
                 />
@@ -197,6 +204,7 @@ export function UpdateParticipant(props) {
             <input
               type="file"
               accept=".pdf,.docx"
+              placeholder={props.currParticipant.resume}
               ref={ResumeRef}
               onChange={onChangeHandler}
             />
@@ -279,12 +287,14 @@ UpdateParticipant.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
+  currParticipant: makeSelectCurrentParticipant(),
   updateParticipant: makeSelectUpdateParticipant(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    getParticipantById: pId => dispatch(getParticipant(pId)),
+    updParticipant: participant => dispatch(updateParticipant(participant)),
   };
 }
 

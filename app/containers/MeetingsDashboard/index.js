@@ -19,12 +19,10 @@ import MeetingCard from './MeetingCard';
 import { delMeeting } from '../App/actions';
 import Link from './Link';
 
-export function MeetingsDashboard({ participants, meetings, deleteMeeting }) {
+export function MeetingsDashboard({ user, participants, meetings, deleteMeeting }) {
   useInjectReducer({ key: 'meetingsDashboard', reducer });
 
   const getParticipantName = pId => {
-    //return pId;
-
     if (!participants) return "";
     const ptc = participants.filter(p => p.id == pId)
     return ptc.length > 0 ? `${ptc[0].firstName} ${ptc[0].lastName}` : "";
@@ -32,6 +30,7 @@ export function MeetingsDashboard({ participants, meetings, deleteMeeting }) {
 
   const cardsArr =
     meetings &&
+    // meetings.filter(m => m.mmId == user.id)
     meetings.map(card => (
       <div className="meetingCard">
         <MeetingCard

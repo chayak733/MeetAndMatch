@@ -24,7 +24,6 @@ export function Statistics(props) {
   const statisticsArr = props.statisticsList &&
     props.statisticsList.map(participant => (
       <div className="participantCard">
-        <hr />
         <ParticipantCard
           key={participant.id}
           name={participant.name}
@@ -36,6 +35,7 @@ export function Statistics(props) {
           phone={participant.phone}
           resume={participant.resume}
         />
+        <hr />
       </div>
     ))
 
@@ -45,7 +45,7 @@ export function Statistics(props) {
         <title>ParticipantsDashboard</title>
         <meta name="description" content="Description of Statistics" />
       </Helmet>
-      <FormattedMessage {...messages.header} />
+      <h3 id="statisticsTitle"><FormattedMessage {...messages.header} /></h3>
       {statisticsArr}
     </div>
   );

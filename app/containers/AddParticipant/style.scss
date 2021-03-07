@@ -1,3 +1,7 @@
+#add-ptc-body{
+  width: 97%;  
+}
+
 h4{
   font-weight: bold;
 }
@@ -139,15 +143,15 @@ color: #ffffff !important;
 
 #costummedDropdown{
   width: 220px;
-  // color: black;
+  color: black;
   font-weight: lighter;
-  // background-color: #ffffff;
+  background-color: #ffffff;
   margin:0px;
   border: none;
-  :focus{
+  ::after{
     box-shadow: 0px;
   }
-  ::after{
+  ::before{
     box-shadow: 0px;
   }
 }

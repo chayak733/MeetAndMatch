@@ -10,13 +10,26 @@ export default function ParticipantCard(props) {
 
     // onClick={() => onClickHandler(props.resume)}
 
+    const convertStatus = status => {
+        switch (status) {
+            case 1:
+                return 'single';
+            case 2:
+                return 'divorced';
+            case 3:
+                return 'widow/er';
+            default:
+                return '';
+        }
+    }
+
     return (
         <>
             <center>
                 <br />
-                <h3>{props.firstName} {props.lastName}</h3>
+                <h3>{props.name}</h3>
                 <h5>
-                    {props.dob}, {props.gender}, {props.status}, {props.origin}
+                    {props.dob}, {props.gender}, {convertStatus(props.status)}, {props.origin}
                 </h5>
                 <h5>
                     {props.email}, {props.phone}
