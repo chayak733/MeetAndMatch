@@ -62,9 +62,6 @@ export function App(props) {
     if (!props.statistics) props.getStatistics();
   }, []);
 
-  // useEffect(() => {
-  //   if (props.user && !props.meetings) props.onLoadMeetings(props.user.id);
-  // }, []);
   const isAdmin = (props.user.mail == 'meetandmatch101@gmail.com');
   return (
     <div>

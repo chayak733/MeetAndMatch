@@ -66,7 +66,7 @@ MeetingsDashboard.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  //   // participants: makeSelectParticipants(),
+  // participants: makeSelectParticipants(),
 });
 
 function mapDispatchToProps(dispatch) {

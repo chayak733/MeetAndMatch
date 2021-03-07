@@ -17,19 +17,12 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 import MatchmakerCard from './MatchmakerCard';
-import { getUnapprovedMM, approveMatchmaker, delMatchmaker } from '../App/actions';
+import { approveMatchmaker, delMatchmaker } from '../App/actions';
+import './style.scss';
 
 export function AdminDashboard(props) {
   useInjectReducer({ key: 'adminDashboard', reducer });
   useInjectSaga({ key: 'adminDashboard', saga });
-
-  const Accept = (card) => {
-    props.approveMM(card);
-  }
-
-  const Ignore = (card) => {
-    props.deleteMM(card);
-  }
 
   const matchmakersArr = props.matchmakers && props.matchmakers.map(card => (
     <div className="MatchmakerCard">
@@ -39,13 +32,12 @@ export function AdminDashboard(props) {
         email={card.mail}
         phone={card.phone}
       />
-      <button type="button" onClick={() => Accept(card)}>
+      <button type="button" onClick={() => props.approveMM(card)}>
         ACCEPT
       </button>
-      <button type="button" onClick={() => Ignore(card)}>
+      <button type="button" onClick={() => props.deleteMM(card)}>
         IGNORE
       </button>
-      <hr />
     </div>
   ))
 
@@ -58,16 +50,15 @@ export function AdminDashboard(props) {
 }
 
 AdminDashboard.propTypes = {
-  // dispatch: PropTypes.func.isRequired,
-  // matchmakers: PropTypes.oneOfType([PropTypes.array, PropTypes.bool, PropTypes.object, PropTypes.func]),
-  // user: PropTypes.oneOfType([PropTypes.object, PropTypes.bool])
+  dispatch: PropTypes.func.isRequired,
+  approveMM: PropTypes.func,
+  deleteMM: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({});
 
 function mapDispatchToProps(dispatch) {
   return {
-    getMatchmakers: () => dispatch(getUnapprovedMM()),
     approveMM: mm => dispatch(approveMatchmaker(mm)),
     deleteMM: mm => dispatch(delMatchmaker(mm)),
   };

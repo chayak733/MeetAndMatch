@@ -22,7 +22,7 @@ import ParticipantCard from './ParticipantCard';
 import Link from './Link';
 import { DropdownButton, Dropdown, Item } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'style.scss';
+import './style.scss';
 
 export function ParticipantDashboard(props) {
   useInjectReducer({ key: 'participantDashboard', reducer });
@@ -127,7 +127,6 @@ export function ParticipantDashboard(props) {
           DELETE
         </button>
         <Link to={`/updateParticipant/${participant.id}`} onClick={() => props.getParticipantById(participant.id)}>UPDATE</Link>
-        <hr />
       </div>
     ))
 

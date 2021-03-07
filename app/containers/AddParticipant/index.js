@@ -13,7 +13,6 @@ import { compose } from 'redux';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
-import uuid from 'uuid-random';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   Form,
@@ -46,17 +45,11 @@ export function AddParticipant(props) {
   const FirstNameRef = createRef();
   const LastNameRef = createRef();
   const DobRef = createRef();
-  //const GenderRef = createRef();
   const EmailRef = createRef();
   const PhoneRef = createRef();
   const ResumeRef = createRef();
-  //const StatusRef = createRef();
 
   const displayAlert = () => setShowAlert(true);
-
-  // const onChangeHandler = event => {
-  //   setResume(event.target.files[0]);
-  // };
 
   const onGenderChange = () => {
     setGender(event.target.value)
@@ -70,7 +63,6 @@ export function AddParticipant(props) {
     debugger;
     event.preventDefault();
     const newParticipant = {
-      // id: uuid(),
       firstName: FirstNameRef.current.value,
       lastName: LastNameRef.current.value,
       dateOfBirth: DobRef.current.value,
@@ -84,20 +76,20 @@ export function AddParticipant(props) {
     };
     console.log(newParticipant)
     props.addParticipant(newParticipant);
-    // setShowAlert(true);
+    setShowAlert(true);
     // displayAlert();
   };
 
   return (
     <div id="add-ptc-body">
-      {/* {showAlert && (
+      {showAlert && (
         <Alert variant="light">
           <Alert.Heading>THE PARTICIPANT WAS ADDED SUCCESSFULY!</Alert.Heading>
           <Link to="/participantsDashboard" id="alertLink">
             Move to Participants Dashboard
           </Link>
         </Alert>
-      )} */}
+      )}
       <Form onSubmit={mapFormToDispatch}>
         <center>
           <h3>Personal Details:</h3>
@@ -226,7 +218,6 @@ export function AddParticipant(props) {
               className="radio"
               name="gender"
               value="male"
-              //ref={GenderRef}
               onChange={onGenderChange}
             />
             <h6>Male</h6>
@@ -235,7 +226,6 @@ export function AddParticipant(props) {
               className="radio"
               name="gender"
               value="female"
-              //ref={GenderRef}
               onChange={onGenderChange}
             />
             <h6>Female</h6>
@@ -286,7 +276,7 @@ export function AddParticipant(props) {
 }
 
 AddParticipant.propTypes = {
-  // dispatch: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
   addParticipant: PropTypes.func,
 };
 

@@ -35,7 +35,6 @@ export function Statistics(props) {
           phone={participant.phone}
           resume={participant.resume}
         />
-        <hr />
       </div>
     ))
 

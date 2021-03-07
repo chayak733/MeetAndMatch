@@ -1,30 +1,14 @@
 
-// .ParticipantCard{
-//   font-family: 'stencil';
-//   font-weight: bold;
-//     width: 45vw;
-//     height: 20vh;
-//     margin: 3vh;
-//     border: 2px solid #42392c;
-//     background-color: #5c52447a;
-//     color: #ffffff;
-//   }
-
-//   h3{
-//     color: #42392c;
-//   }
-
-  .ParticipantCard{
-    display: block;
+  .participantCard{
     font-family: 'stencil';
     font-weight: bold;
-    width: 45vw !important;
-    height: 27vh !important;
-    margin-bottom: 3vh !important;
-    border: 2px solid #42392c !important;
-    background-color: #5c52447a !important;
+    width: 35vw;
+    height: max-content;
+    margin: 3vh;
+    border: 2px solid #42392c;
+    background-color: #5c52447a;
     color: #ffffff;
-  }
+    }
   
   hr, h3{
     color: #42392c;

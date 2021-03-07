@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-// import { useInjectReducer } from 'utils/injectReducer';
 import {
   Form,
   Col,
@@ -23,7 +22,6 @@ import {
 import { Telephone, Person, GeoAlt } from 'react-bootstrap-icons';
 import uuid from 'uuid-random';
 import Button from '../../components/Button';
-// import reducer from '../App/reducer';
 import {
   selectFemaleParticipants,
   selectMaleParticipants,
@@ -50,8 +48,6 @@ export function AddMeetingPage(props) {
   useEffect(() => {
     if (props.user) setUser(props.user.name);
   }, []);
-  //const current = makeSelectCurrentParticipant();
-  //useInjectReducer({ key: 'addMeetingPage', reducer });
 
   const DateRef = createRef();
   const AddressRef = createRef();
@@ -80,11 +76,6 @@ export function AddMeetingPage(props) {
       setFemaleTitle(`${participant.firstName} ${participant.lastName}`);
       setFemaleId(participant.id);
     }
-  };
-
-  const checkFunc = () => {
-    const current = props.getParticipant(1);
-    console.log(current);
   };
 
   const getDropdownItems = gender => {
@@ -116,10 +107,6 @@ export function AddMeetingPage(props) {
           </Link>
             </Alert>
           )}
-
-          {/* <button type="submit" onClick={checkFunc}>
-            get participant
-        </button> */}
 
           <Form onSubmit={mapFormToDispatch}>
             <center>
@@ -212,15 +199,12 @@ AddMeetingPage.propTypes = {
   maleParticipants: PropTypes.oneOf([PropTypes.array, PropTypes.bool]),
   femaleParticipants: PropTypes.oneOf([PropTypes.array, PropTypes.bool]),
   addMeeting: PropTypes.func,
-  // getParticipant: PropTypes.func,
-  // getParticipantByID: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
   maleParticipants: selectMaleParticipants(),
   femaleParticipants: selectFemaleParticipants(),
   user: makeSelectUser(),
-  // getParticipantByID: participantId => makeSelectParticipantByID(participantId),
 });
 
 function mapDispatchToProps(dispatch) {
